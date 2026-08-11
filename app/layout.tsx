@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { BlogProvider } from "./context/BlogContext";
 import AnalyticsTracker from "./components/AnalyticsTracker";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,64 @@ export default function RootLayout({
           <AnalyticsTracker />
           {children}
         </BlogProvider>
+
+        {/* ── Ad Network Scripts ─────────────────────────────────────────── */}
+
+        {/* Required container div for effectivecpmnetwork invoke ad */}
+        <div id="container-58a81b64213dd30a97a673fcc3c7d4d3" />
+
+        {/* effectivecpmnetwork – script 1 */}
+        <Script
+          id="ecpm-1"
+          src="https://pl30803250.effectivecpmnetwork.com/04/d3/da/04d3dabc69660d1d9c1d746c1c10f49a.js"
+          strategy="lazyOnload"
+        />
+
+        {/* effectivecpmnetwork – script 2 */}
+        <Script
+          id="ecpm-2"
+          src="https://pl30803251.effectivecpmnetwork.com/fa/89/20/fa892032ca5497aaeff3ef1154cdcd20.js"
+          strategy="lazyOnload"
+        />
+
+        {/* effectivecpmnetwork – push notification */}
+        <Script
+          id="ecpm-push"
+          src="https://www.effectivecpmnetwork.com/pyvagnh5c?key=e285981266460197eb0308433b61c234"
+          strategy="lazyOnload"
+        />
+
+        {/* effectivecpmnetwork – invoke script (async, data-cfasync=false) */}
+        <Script
+          id="ecpm-3"
+          src="https://pl30803253.effectivecpmnetwork.com/58a81b64213dd30a97a673fcc3c7d4d3/invoke.js"
+          strategy="lazyOnload"
+          data-cfasync="false"
+        />
+
+        {/* highperformanceformat – atOptions config */}
+        <Script
+          id="hpf-config"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+              atOptions = {
+                'key' : 'd404c3e8d8fde5ac0df8f054bbc542fc',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+              };
+            `,
+          }}
+        />
+
+        {/* highperformanceformat – invoke script */}
+        <Script
+          id="hpf-invoke"
+          src="https://www.highperformanceformat.com/d404c3e8d8fde5ac0df8f054bbc542fc/invoke.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
