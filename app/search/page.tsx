@@ -201,9 +201,13 @@ function SearchContent() {
       {sortedPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedPosts.map((post) => (
-            <article 
+            <Link
               key={post._id}
-              className="group flex flex-col justify-between overflow-hidden rounded-2xl glass-panel neon-glow-hover transition-all duration-300 border border-border-color"
+              href={`/blog/${post.slug}`}
+              className="group block"
+            >
+            <article 
+              className="flex flex-col justify-between overflow-hidden rounded-2xl glass-panel neon-glow-hover transition-all duration-300 border border-border-color cursor-pointer h-full"
             >
               {/* Image */}
               <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -231,11 +235,9 @@ function SearchContent() {
                     <span>{post.readTime}</span>
                   </div>
 
-                  <Link href={`/blog/${post.slug}`}>
-                    <h3 className="text-base font-bold text-text-main group-hover:text-primary transition-colors duration-200 line-clamp-2 mb-2">
-                      {post.title}
-                    </h3>
-                  </Link>
+                  <h3 className="text-base font-bold text-text-main group-hover:text-primary transition-colors duration-200 line-clamp-2 mb-2">
+                    {post.title}
+                  </h3>
 
                   <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">
                     {post.excerpt}
@@ -262,6 +264,7 @@ function SearchContent() {
 
               </div>
             </article>
+            </Link>
           ))}
         </div>
       ) : (

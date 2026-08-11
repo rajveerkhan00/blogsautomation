@@ -37,56 +37,57 @@ function BlogCard({ post }: { post: BlogPost }) {
   const [bookmarked, setBookmarked] = useState(false);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl glass-panel neon-glow-hover transition-all duration-300">
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <Image
-          src={post.coverImage || FALLBACK_IMAGE}
-          alt={post.title}
-          fill sizes="30vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <span className="absolute top-3 left-3 rounded-full bg-bg-surface/90 backdrop-blur-sm px-2.5 py-0.5 text-[9px] font-black text-primary uppercase tracking-widest border border-border-color z-10"
-          style={{ fontFamily: "Impact, 'Arial Narrow', Arial, sans-serif" }}>
-          {post.category}
-        </span>
-        <button
-          onClick={() => setBookmarked(!bookmarked)}
-          className="absolute top-3 right-3 p-1.5 rounded-full bg-bg-surface/90 border border-border-color text-text-muted hover:text-primary transition-all z-10"
-        >
-          <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-primary text-primary" : ""}`} />
-        </button>
-        <div className="absolute inset-0 bg-neutral-950/10 mix-blend-multiply" />
-      </div>
-      <div className="p-5 flex flex-col flex-1 justify-between">
-        <div>
-          <div className="flex items-center gap-1.5 text-[9px] text-text-muted mb-2">
-            <Clock className="h-3 w-3" />{post.readTime}<span>·</span>{formatDate(post.createdAt)}
-          </div>
-          <Link href={`/blog/${post.slug}`}>
+    <Link href={`/blog/${post.slug}`} className="group block">
+      <article className="flex flex-col overflow-hidden rounded-2xl glass-panel neon-glow-hover transition-all duration-300 cursor-pointer h-full">
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <Image
+            src={post.coverImage || FALLBACK_IMAGE}
+            alt={post.title}
+            fill sizes="30vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <span className="absolute top-3 left-3 rounded-full bg-bg-surface/90 backdrop-blur-sm px-2.5 py-0.5 text-[9px] font-black text-primary uppercase tracking-widest border border-border-color z-10"
+            style={{ fontFamily: "Impact, 'Arial Narrow', Arial, sans-serif" }}>
+            {post.category}
+          </span>
+          <button
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setBookmarked(!bookmarked); }}
+            className="absolute top-3 right-3 p-1.5 rounded-full bg-bg-surface/90 border border-border-color text-text-muted hover:text-primary transition-all z-10"
+          >
+            <Bookmark className={`h-3.5 w-3.5 ${bookmarked ? "fill-primary text-primary" : ""}`} />
+          </button>
+          <div className="absolute inset-0 bg-neutral-950/10 mix-blend-multiply" />
+        </div>
+        <div className="p-5 flex flex-col flex-1 justify-between">
+          <div>
+            <div className="flex items-center gap-1.5 text-[9px] text-text-muted mb-2">
+              <Clock className="h-3 w-3" />{post.readTime}<span>·</span>{formatDate(post.createdAt)}
+            </div>
             <h3 className="text-base uppercase leading-tight text-text-main group-hover:text-primary transition-colors line-clamp-2 mb-2"
               style={{ fontFamily: "Impact, 'Arial Narrow', Arial, sans-serif" }}>
               {post.title}
             </h3>
-          </Link>
-          <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
-        </div>
-        <div className="flex items-center justify-between pt-4 border-t border-border-color">
-          <span className="text-[10px] font-semibold text-text-main truncate max-w-[120px]">{post.author}</span>
-          <div className="flex items-center gap-2.5 text-[10px] text-text-muted">
-            <button
-              onClick={() => setLiked(!liked)}
-              className={`flex items-center gap-1 hover:text-primary transition-all ${liked ? "text-primary" : ""}`}
-            >
-              <Heart className={`h-3.5 w-3.5 ${liked ? "fill-primary" : ""}`} />
-              {liked ? post.likes + 1 : post.likes}
-            </button>
-            <span className="flex items-center gap-1"><Eye className="h-3.5 w-3.5" />{post.views.toLocaleString()}</span>
+            <p className="text-xs text-text-muted leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
+          </div>
+          <div className="flex items-center justify-between pt-4 border-t border-border-color">
+            <span className="text-[10px] font-semibold text-text-main truncate max-w-[120px]">{post.author}</span>
+            <div className="flex items-center gap-2.5 text-[10px] text-text-muted">
+              <button
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLiked(!liked); }}
+                className={`flex items-center gap-1 hover:text-primary transition-all ${liked ? "text-primary" : ""}`}
+              >
+                <Heart className={`h-3.5 w-3.5 ${liked ? "fill-primary" : ""}`} />
+                {liked ? post.likes + 1 : post.likes}
+              </button>
+              <span className="flex items-center gap-1"><Eye className="h-3.5 w-3.5" />{post.views.toLocaleString()}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }
+
 
 interface CategoryPageProps {
   category: "Tech" | "Movies" | "Health" | "Sports";
