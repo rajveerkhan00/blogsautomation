@@ -55,6 +55,13 @@ export default function RootLayout({
 
         {/* ── Ad Network Scripts ─────────────────────────────────────────── */}
 
+        {/*
+          NOTE: Using "afterInteractive" (not "lazyOnload") so scripts execute
+          immediately after page hydration — on every page load, in every region.
+          "lazyOnload" can be skipped or delayed on slow connections, causing ads
+          to not render for many international IP locations.
+        */}
+
         {/* Required container div for effectivecpmnetwork invoke ad */}
         <div id="container-58a81b64213dd30a97a673fcc3c7d4d3" />
 
@@ -62,38 +69,55 @@ export default function RootLayout({
         <Script
           id="ecpm-1"
           src="https://pl30803250.effectivecpmnetwork.com/04/d3/da/04d3dabc69660d1d9c1d746c1c10f49a.js"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
 
         {/* effectivecpmnetwork – script 2 */}
         <Script
           id="ecpm-2"
           src="https://pl30803251.effectivecpmnetwork.com/fa/89/20/fa892032ca5497aaeff3ef1154cdcd20.js"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
 
         {/* effectivecpmnetwork – push notification */}
         <Script
           id="ecpm-push"
           src="https://www.effectivecpmnetwork.com/pyvagnh5c?key=e285981266460197eb0308433b61c234"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
 
-        {/* effectivecpmnetwork – invoke script (async, data-cfasync=false) */}
+        {/*
+          effectivecpmnetwork – invoke script
+          data-cfasync="false" must reach the DOM; Next.js <Script> strips unknown
+          attrs, so we inject it manually via an inline loader that creates the
+          <script> tag with the attribute preserved.
+        */}
         <Script
-          id="ecpm-3"
-          src="https://pl30803253.effectivecpmnetwork.com/58a81b64213dd30a97a673fcc3c7d4d3/invoke.js"
-          strategy="lazyOnload"
-          data-cfasync="false"
-        />
-
-        {/* highperformanceformat – atOptions config */}
-        <Script
-          id="hpf-config"
-          strategy="lazyOnload"
+          id="ecpm-3-loader"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              atOptions = {
+              (function() {
+                var s = document.createElement('script');
+                s.src = 'https://pl30803253.effectivecpmnetwork.com/58a81b64213dd30a97a673fcc3c7d4d3/invoke.js';
+                s.async = true;
+                s.setAttribute('data-cfasync', 'false');
+                document.head.appendChild(s);
+              })();
+            `,
+          }}
+        />
+
+        {/*
+          highperformanceformat – atOptions MUST be defined before invoke.js runs.
+          Use "beforeInteractive" so the config is available when invoke.js loads.
+        */}
+        <Script
+          id="hpf-config"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.atOptions = {
                 'key' : 'd404c3e8d8fde5ac0df8f054bbc542fc',
                 'format' : 'iframe',
                 'height' : 60,
@@ -108,7 +132,7 @@ export default function RootLayout({
         <Script
           id="hpf-invoke"
           src="https://www.highperformanceformat.com/d404c3e8d8fde5ac0df8f054bbc542fc/invoke.js"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
       </body>
     </html>

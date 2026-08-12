@@ -1,0 +1,11 @@
+# ads.txt — Authorized Digital Sellers
+# https://iabtechlab.com/ads-txt/
+# Updated: 2026-08-12
+
+# effectivecpmnetwork.com
+effectivecpmnetwork.com, 30803250, DIRECT
+effectivecpmnetwork.com, 30803251, DIRECT
+effectivecpmnetwork.com, 30803253, DIRECT
+
+# highperformanceformat.com
+highperformanceformat.com, d404c3e8d8fde5ac0df8f054bbc542fc, DIRECT
